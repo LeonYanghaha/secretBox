@@ -3,7 +3,7 @@ package models
 import "github.com/astaxie/beego/orm"
 
 type User struct {
-	Uid          int
+	Id          int
 	Name        string
 	Password	string
 }

@@ -6,7 +6,7 @@ import (
 )
 
 type Secret struct {
-	Sid         int
+	Id          int
 	Name        string
 	Password	string
 	CreateDate	time.Time
