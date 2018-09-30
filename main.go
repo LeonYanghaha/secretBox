@@ -10,7 +10,7 @@ func main() {
 
 	//check init
 	toolBox.Init()
-
+	toolBox.OpenUrl()
 	beego.Run()
 
 

@@ -1,5 +1,13 @@
 $(function () {
 
+
+    window.onbeforeunload= function(event) {
+
+        $.post(
+            "/closepage",
+        );
+    };
+
     $(".submitBtn").click(function () {
         $(".errorinfo").html("");
         var name = $(".formname").val().trim();
@@ -21,4 +29,6 @@ $(function () {
     function showErrorInfo(str){
         $(".errorinfo").html(str);
     }
+
+
 });

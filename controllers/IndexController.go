@@ -14,3 +14,13 @@ func (c *IndexController) Index() {
 	c.TplName = "index.tpl"
 
 }
+
+func (c *IndexController) ClosePage () {
+
+	//flash
+	println(".............................")
+
+	c.Data["isFirst"] = true
+	c.TplName = "index.tpl"
+
+}

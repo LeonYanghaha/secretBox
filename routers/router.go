@@ -9,6 +9,7 @@ func init() {
 
 	//index
 	beego.Router("/", &controllers.IndexController{},"*:Index")
+	beego.Router("/closepage", &controllers.IndexController{},"post:ClosePage")
 
 	//user
 	//beego.Router("/login", &controllers.UserController{},"get:login")
