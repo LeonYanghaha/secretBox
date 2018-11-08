@@ -17,8 +17,6 @@ func (c *IndexController) Index() {
 
 func (c *IndexController) ClosePage () {
 
-	//flash
-	println(".............................")
 
 	c.Data["isFirst"] = true
 	c.TplName = "index.tpl"

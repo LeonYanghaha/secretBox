@@ -1,18 +1,15 @@
 package main
 
 import (
-	_ "secretBox/routers"
 	"github.com/astaxie/beego"
+	_ "secretBox/routers"
 	"secretBox/toolBox"
 )
 
 func main() {
 
 	//check init
-	toolBox.Init()
-	toolBox.OpenUrl()
+	toolBox.CheckENV()
 	beego.Run()
-
-
 }
 

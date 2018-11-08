@@ -10,20 +10,21 @@ import (
 	"strings"
 )
 
+func openBrower(url string)(bool,error){
+	return false , nil
+}
 
-func Home() (string, error) {
+
+func getUserHome() (string, error) {
 	user, err := user.Current()
 	if nil == err {
 		return user.HomeDir, nil
 	}
 
-	// cross compile support
-
 	if "windows" == runtime.GOOS {
 		return homeWindows()
 	}
 
-	// Unix-like system, so just assume Unix
 	return homeUnix()
 }
 
