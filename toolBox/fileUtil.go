@@ -10,7 +10,7 @@ import (
 
 // 0 文件不存在
 // 1 文件存在，文件损坏
-func checkFile(filePath string) (int){
+func CheckFile(filePath string) (int){
 
 	if !fileIsExist(filePath) {
 		//如果没有当前文件，肯定是第一次打开，直接返回吧
@@ -25,6 +25,11 @@ func checkFile(filePath string) (int){
 	if lineNum != 5{
 		return 1
 	}
+
+	//user := models.User{}
+
+
+
 
 
 

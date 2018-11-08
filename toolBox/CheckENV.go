@@ -1,28 +1,30 @@
 package toolBox
 
-import (
-	"github.com/astaxie/beego"
-	"path"
-)
-
 func CheckENV()  {
-	userInfoFile := beego.AppConfig.String("userInfoFile")
-	homePath, _ :=  getUserHome()
-	filePath := path.Join(homePath,userInfoFile)
-	println(filePath)
-
-	// isFirst:=checkIsFirst(filePath)
-	isOk := checkFile(filePath)
-
-	switch isOk {
-
-		case 0:
-			break
-		case 1:
-			break
-		default:
-
-	}
+//	userInfoFile := beego.AppConfig.String("userInfoFile")
+//	homePath, _ :=  getUserHome()
+//	filePath := path.Join(homePath,userInfoFile)
+//	println(filePath)
+//
+//	isOk := checkFile(filePath)
+//	app := models.GetApp()
+//
+//	switch isOk {
+//
+//		case 0:
+//			app.IsFirst = true
+//			app.Status = false
+//			app.Username = "00000"
+//			break
+//		case 1:
+//			app.IsFirst = false
+//			app.Status = false
+//			app.Username = "11111"
+//			break
+//		default:
+//			break
+//
+//	}
 }
 
 // 0  first

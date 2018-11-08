@@ -26,8 +26,10 @@
         <br/>
 
         {{if .isFirst}}
-            貌似是第一次打开，请先完善个人信息吧~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a >regist</a>
+            貌似是第一次打开，{{.userName}}--请先完善个人信息吧~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a >regist</a>
         {{end}}
+
+
         <br/>
         <span class="errorinfo">https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js</span>
         <button type="button" class="btn btn-default submitBtn">login</button>

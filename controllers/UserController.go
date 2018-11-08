@@ -9,12 +9,12 @@ type UserController struct {
 	beego.Controller
 }
 
-
+func (c *UserController)Regist()  {
+	
+}
 
 func (c *UserController) Login() {
-
-
-
+	
 	name := c.GetString("name")
 	pw := c.GetString("pw")
 	res := toolBox.GetRes()
@@ -30,6 +30,5 @@ func (c *UserController) Login() {
 	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }//"success": 0, "message": "111"}
 	c.ServeJSON()
 	return
-
 
 }

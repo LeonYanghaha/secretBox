@@ -1,6 +1,10 @@
 package controllers
 
-import "github.com/astaxie/beego"
+import (
+	"github.com/astaxie/beego"
+	"path"
+	"secretBox/toolBox"
+)
 
 type IndexController struct {
 	beego.Controller
@@ -10,6 +14,37 @@ type IndexController struct {
 
 func (c *IndexController) Index() {
 
+	userInfoFile := beego.AppConfig.String("userInfoFile")
+	homePath, _ :=  toolBox.GetUserHome()
+	filePath := path.Join(homePath,userInfoFile)
+	println(filePath)
+
+	isOk := toolBox.CheckFile(filePath)
+
+	type tempData struct {
+		isFirst  bool
+		isOk     bool
+		userName string
+	}
+	temp := tempData{}
+
+	switch isOk {
+		case 0:
+			temp.isOk = false
+			temp.isFirst = true
+			temp.userName = "1234"
+			break
+		case 1:
+			temp.isOk = false
+			temp.isFirst = false
+			temp.userName = "123"
+			break
+		default:
+			break
+	}
+
+	c.Data["isOk"] = true
+	c.Data["userName"] = "1234"
 	c.Data["isFirst"] = true
 	c.TplName = "index.tpl"
 
