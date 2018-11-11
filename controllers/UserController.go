@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"secretBox/toolBox"
+	"strings"
 )
 
 type UserController struct {
@@ -58,15 +59,41 @@ func (c *UserController) Login() {
 	pw := c.GetString("pw")
 	res := toolBox.GetRes()
 	if name=="" || pw==""{
-		res.Info ="can shu wei kong !"
-		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }//"success": 0, "message": "111"}
+		res.Info ="参数不能为空"
+		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
 		c.ServeJSON()
 		return
 	}
 
-	res.Info ="12345"
-	res.Code = 0
-	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }//"success": 0, "message": "111"}
+	userinfo,errorinfo := toolBox.GetUserInfo()
+	if errorinfo !="" {
+		res.Info = "参数不能为空"
+		c.Data["json"] = map[string]interface{}{"code": res.Code, "info": res.Info, "data": res.Data}
+		c.ServeJSON()
+		return
+	}
+	temp := strings.SplitN(userinfo,".",3)
+
+	if temp[0] !=name {
+		res.Info ="用户名错误"
+		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
+		c.ServeJSON()
+		return
+	}
+
+	if temp[1] !=toolBox.EnCrypetPw(pw) {
+		res.Info ="密码错误"
+		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
+		c.ServeJSON()
+		return
+	}
+
+	res.Info ="success"
+	currentUser := make(map[string]string)
+	currentUser["name"]=name
+	currentUser["pw"]="*************"
+	res.Data = currentUser
+	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
 	c.ServeJSON()
 	return
 

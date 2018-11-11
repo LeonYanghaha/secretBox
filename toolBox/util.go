@@ -13,6 +13,16 @@ import (
 	"strconv"
 )
 
+func GetUserInfo ()(userinfo,errorinfo string){
+
+	fileContent,_ := fileReadByLine(GetFilePath())
+
+	if len(fileContent)!=4 {
+		return "","文件不合法"
+	}
+	return fileContent[0],""
+}
+
 func GetFilePath ()string{
 		userInfoFile := beego.AppConfig.String("userInfoFile")
 		homePath, _ :=  getUserHome()

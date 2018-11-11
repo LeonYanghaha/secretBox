@@ -35,7 +35,6 @@ func initFile(un,pw string)(bool,string) {
 		return false,"error"
 	}else{
 		return true ,"sunccess"
-
 	}
 }
 
