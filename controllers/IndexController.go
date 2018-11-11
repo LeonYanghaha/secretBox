@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	"path"
 	"secretBox/toolBox"
 )
 
@@ -14,9 +13,7 @@ type IndexController struct {
 
 func (c *IndexController) Index() {
 
-	userInfoFile := beego.AppConfig.String("userInfoFile")
-	homePath, _ :=  toolBox.GetUserHome()
-	filePath := path.Join(homePath,userInfoFile)
+	filePath := toolBox.GetFilePath()
 	println(filePath)
 
 	isOk := toolBox.CheckFile(filePath)

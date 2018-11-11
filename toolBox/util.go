@@ -8,11 +8,23 @@ import (
 	"encoding/hex"
 	"github.com/astaxie/beego"
 	"math/rand"
+	"path"
 	"secretBox/models"
 	"strconv"
 )
 
-func UserInfoToFile(un,pw string) bool {
+func GetFilePath ()string{
+		userInfoFile := beego.AppConfig.String("userInfoFile")
+		homePath, _ :=  getUserHome()
+		filePath := path.Join(homePath,userInfoFile)
+		return filePath
+}
+
+func HasHistory()bool{
+	return fileIsExist(GetFilePath())
+}
+
+func UserInfoToFile(un,pw string) (bool,string) {
 	return initFile(un,pw)
 }
 

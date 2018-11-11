@@ -3,6 +3,7 @@ package toolBox
 import (
 	"bufio"
 	"fmt"
+	"github.com/astaxie/beego"
 	"io"
 	"os"
 	"strconv"
@@ -10,25 +11,65 @@ import (
 )
 
 
-func initFile(un,pw string)bool {
-	line1 := un+"."+pw+"."+ time.Now().Format("2006-01-02 15:04:05")
-	line2 :=getRandomNum()
-	line3 :=""
-	line4 := time.Now().Format("2006-01-02 15:04:05")
+func initFile(un,pw string)(bool,string) {
 
-	flagLine1 := contentToFile(1,line1)
-	flagLine2 := contentToFile(2,line2)
-	flagLine3 := contentToFile(3,line3)
-	flagLine4 := contentToFile(4,line4)
-	if flagLine1 && flagLine2 && flagLine3 && flagLine4 {
-		return true
+	//在写入文件之前，应该去检测是否存在历史文件
+	hasHistory := HasHistory()
+	if hasHistory {
+		return false ,"存在历史文件"
+	}
+	//创建文件
+	if !createFile() {
+		return false, "文件创建失败"
+	}
+
+	line1 := un+"."+pw+"."+ time.Now().Format("2006-01-02 15:04:05")+"\n"
+	line2 :=getRandomNum()+"\n"
+	line3 :=""+"\n"
+	line4 := time.Now().Format("2006-01-02 15:04:05")+"\n"
+
+	content:=[]byte(line1 + line2 + line3 + line4)
+	err:=writeFile(content,0777)
+	if err!=nil {
+		fmt.Println(err)
+		return false,"error"
 	}else{
+		return true ,"sunccess"
+
+	}
+}
+
+func writeFile(data []byte,perm os.FileMode) error{
+
+	fileName := GetFilePath()
+	f,err:=os.OpenFile(fileName,os.O_WRONLY|os.O_CREATE|os.O_TRUNC,perm)
+	if err!=nil {
+		return err
+	}
+	n,err:=f.Write(data)
+	if err==nil && n<len(data){
+		err=io.ErrShortWrite
+	}
+	if err1:=f.Close();err==nil{
+		err=err1
+	}
+	return err
+}
+
+func createFile()bool{
+	userInfoFile := beego.AppConfig.String("userInfoFile")
+	file,err:=os.Create(userInfoFile)
+	if err!=nil{
+		fmt.Println(err)
 		return false
 	}
+	defer file.Close()
+	return true
 }
 
 func contentToFile(lineNum int , content string)bool{
 
+    //fileContent,_ := readFile()
 
 
 	return false

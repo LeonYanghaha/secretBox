@@ -15,7 +15,7 @@ func openBrower(url string)(bool,error){
 }
 
 
-func GetUserHome() (string, error) {
+func getUserHome() (string, error) {
 	user, err := user.Current()
 	if nil == err {
 		return user.HomeDir, nil

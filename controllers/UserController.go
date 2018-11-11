@@ -29,8 +29,9 @@ func (c *UserController)Regist()  {
 		return
 	}
 	pw  = toolBox.EnCrypetPw(pw)
-	isSuccess :=toolBox.UserInfoToFile(un,pw)
 
+	isSuccess,info :=toolBox.UserInfoToFile(un,pw)
+	println(info)
 	if isSuccess{
 		res.Info ="注册成功！"
 		res.Code=1
