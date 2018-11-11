@@ -6,7 +6,33 @@ import (
 	"io"
 	"os"
 	"strconv"
+	"time"
 )
+
+
+func initFile(un,pw string)bool {
+	line1 := un+"."+pw+"."+ time.Now().Format("2006-01-02 15:04:05")
+	line2 :=getRandomNum()
+	line3 :=""
+	line4 := time.Now().Format("2006-01-02 15:04:05")
+
+	flagLine1 := contentToFile(1,line1)
+	flagLine2 := contentToFile(2,line2)
+	flagLine3 := contentToFile(3,line3)
+	flagLine4 := contentToFile(4,line4)
+	if flagLine1 && flagLine2 && flagLine3 && flagLine4 {
+		return true
+	}else{
+		return false
+	}
+}
+
+func contentToFile(lineNum int , content string)bool{
+
+
+
+	return false
+}
 
 // 0 文件不存在
 // 1 文件存在，文件损坏
@@ -29,13 +55,7 @@ func CheckFile(filePath string) (int){
 	//user := models.User{}
 
 
-
-
-
-
-
 	return 0
-
 
 }
 

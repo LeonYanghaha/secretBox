@@ -6,15 +6,34 @@ import (
 	"crypto/sha1"
 	"encoding/base64"
 	"encoding/hex"
+	"github.com/astaxie/beego"
 	"math/rand"
 	"secretBox/models"
+	"strconv"
 )
+
+func UserInfoToFile(un,pw string) bool {
+	return initFile(un,pw)
+}
+
+func getRandomNum ()string{
+	num := RandInt64()
+	str := strconv.FormatInt(num,10)
+	return Sha1(str)
+}
 
 func GetRes() models.Res {
 	var res models.Res
 	res.Code = -1
 	res.Info = "error"
 	return res
+}
+
+func EnCrypetPw(pw string)string{
+	seedSTART  := beego.AppConfig.String("pwseedstart")
+	seedEND  := beego.AppConfig.String("pwseedend")
+	tempStr := seedSTART+pw+seedEND
+	return Sha1(tempStr)
 }
 
 func RandInt64() int64 {
@@ -77,7 +96,7 @@ func DeCrypt(text string, key []byte) string {
 	}
 
 	//去码
-	var pkcs_unCode = PKCS5UnPadding(orig)
+	 pkcs_unCode := PKCS5UnPadding(orig)
 	return string(pkcs_unCode)
 }
 

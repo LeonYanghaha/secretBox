@@ -10,5 +10,6 @@ func main() {
 	//check init
 	//toolBox.CheckENV()
 	beego.Run()
+
 }
 
