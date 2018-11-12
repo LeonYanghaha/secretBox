@@ -9,6 +9,23 @@ import (
 type UserController struct {
 	beego.Controller
 }
+
+//var globalSessions *session.Manager
+//
+//func init() {
+//	sessionConfig := &session.ManagerConfig{
+//		CookieName:beego.AppConfig.String("appname"),
+//		EnableSetCookie: true,
+//		Gclifetime:3600,
+//		Maxlifetime: 3600,
+//		Secure: false,
+//		CookieLifeTime: 3600,
+//		ProviderConfig: "./tmp",
+//	}
+//	globalSessions, _ = session.NewManager("memory",sessionConfig)
+//	go globalSessions.GC()
+//}
+
 // POST  注册接口
 func (c *UserController)Regist()  {
 
@@ -54,7 +71,17 @@ func (c *UserController)Reandregist()  {
 }
 
 func (c *UserController) Login() {
-	
+
+	//sess, _ := globalSessions.SessionStart(w, r)
+	//defer sess.SessionRelease(w)
+	//username := sess.Get("username")
+	//if r.Method == "GET" {
+	//	t, _ := template.ParseFiles("login.gtpl")
+	//	t.Execute(w, nil)
+	//} else {
+	//	sess.Set("username", r.Form["username"])
+	//}
+
 	name := c.GetString("name")
 	pw := c.GetString("pw")
 	res := toolBox.GetRes()
@@ -88,6 +115,18 @@ func (c *UserController) Login() {
 		return
 	}
 
+	//println(ctx.ResponseWriter, c.Request)
+	//sess, _ := globalSessions.SessionStart(w, r)
+	//defer sess.SessionRelease(w)
+
+	c.SetSession("name",&name)
+	c.SetSession("pw",&pw)
+
+
+
+	//sess.Set("name",name)
+	//sess.Set("pw", pw)
+
 	res.Info ="success"
 	currentUser := make(map[string]string)
 	currentUser["name"]=name
@@ -96,5 +135,4 @@ func (c *UserController) Login() {
 	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
 	c.ServeJSON()
 	return
-
 }
