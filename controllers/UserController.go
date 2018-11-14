@@ -30,9 +30,12 @@ type UserController struct {
 func (c *UserController)Regist()  {
 
 	res := toolBox.GetRes()
-	un:=c.GetString("username")
-	pw:=c.GetString("password")
-	repw:=c.GetString("repassword")
+	un:=c.GetString("un")
+	pw:=c.GetString("pw")
+	repw:=c.GetString("repw")
+	println(un)
+	println(pw)
+	println(repw)
 	if un=="" || pw=="" || repw==""{
 		res.Info ="用户名或者密码不能为空！"
 		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
@@ -82,7 +85,7 @@ func (c *UserController) Login() {
 	//	sess.Set("username", r.Form["username"])
 	//}
 
-	name := c.GetString("name")
+	name := c.GetString("un")
 	pw := c.GetString("pw")
 	res := toolBox.GetRes()
 	if name=="" || pw==""{
@@ -119,8 +122,8 @@ func (c *UserController) Login() {
 	//sess, _ := globalSessions.SessionStart(w, r)
 	//defer sess.SessionRelease(w)
 
-	c.SetSession("name",&name)
-	c.SetSession("pw",&pw)
+	c.SetSession("name",name)
+	c.SetSession("pw",pw)
 
 
 

@@ -14,37 +14,30 @@ type IndexController struct {
 func (c *IndexController) Index() {
 
 	filePath := toolBox.GetFilePath()
-	println(filePath)
-
+	res := toolBox.GetRes()
 	isOk := toolBox.CheckFile(filePath)
 
-	type tempData struct {
-		isFirst  bool
-		isOk     bool
-		userName string
-	}
-	temp := tempData{}
-
 	switch isOk {
-		case 0:
-			temp.isOk = false
-			temp.isFirst = true
-			temp.userName = "1234"
-			break
-		case 1:
-			temp.isOk = false
-			temp.isFirst = false
-			temp.userName = "123"
-			break
-		default:
-			break
+	case 0 :
+		res.Code = -1
+		res.Info = "貌似是第一次登录，请先去注册吧."
+		break
+	case 1 :
+		res.Code = -1
+		res.Info= "文件被损坏了."
+		break
+	case 99 :
+		res.Code = 1
+		res.Info= "ok"
+		break
+	default:
+		res.Code = -1
+		res.Info= "这是不可能出现的"
+		break
 	}
-
-	c.Data["isOk"] = true
-	c.Data["userName"] = "1234"
-	c.Data["isFirst"] = true
-	c.TplName = "index.tpl"
-
+	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data}
+	c.ServeJSON()
+	return
 }
 
 func (c *IndexController) ClosePage () {

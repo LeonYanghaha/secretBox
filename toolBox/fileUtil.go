@@ -91,12 +91,8 @@ func CheckFile(filePath string) (int){
 	if lineNum != 5{
 		return 1
 	}
-
 	//user := models.User{}
-
-
-	return 0
-
+	return 99
 }
 
 func fileReadByLine (path string)([4]string,int){

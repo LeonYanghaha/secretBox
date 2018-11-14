@@ -1,7 +1,7 @@
 package models
 
 type Res struct {
-	Code         int
+	Code         int  // -1   0   99
 	Info         string
 	Data         map[string]string
 }
