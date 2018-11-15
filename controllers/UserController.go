@@ -75,16 +75,6 @@ func (c *UserController)Reandregist()  {
 
 func (c *UserController) Login() {
 
-	//sess, _ := globalSessions.SessionStart(w, r)
-	//defer sess.SessionRelease(w)
-	//username := sess.Get("username")
-	//if r.Method == "GET" {
-	//	t, _ := template.ParseFiles("login.gtpl")
-	//	t.Execute(w, nil)
-	//} else {
-	//	sess.Set("username", r.Form["username"])
-	//}
-
 	name := c.GetString("un")
 	pw := c.GetString("pw")
 	res := toolBox.GetRes()
@@ -118,22 +108,11 @@ func (c *UserController) Login() {
 		return
 	}
 
-	//println(ctx.ResponseWriter, c.Request)
-	//sess, _ := globalSessions.SessionStart(w, r)
-	//defer sess.SessionRelease(w)
-
-	c.SetSession("name",name)
-	c.SetSession("pw",pw)
-
-
-
-	//sess.Set("name",name)
-	//sess.Set("pw", pw)
-
 	res.Info ="success"
 	currentUser := make(map[string]string)
 	currentUser["name"]=name
 	currentUser["pw"]="*************"
+	res.Code = 1
 	res.Data = currentUser
 	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
 	c.ServeJSON()
