@@ -3,7 +3,9 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"secretBox/toolBox"
+	"strconv"
 	"strings"
+	"time"
 )
 
 type UserController struct {
@@ -75,6 +77,14 @@ func (c *UserController)Reandregist()  {
 
 func (c *UserController) Login() {
 
+
+	t:= c.Ctx.GetCookie("t")
+	p:= c.Ctx.GetCookie("p")
+	n:= c.Ctx.GetCookie("n")
+	d:= c.Ctx.GetCookie("d")
+	println(t,p,n,d,"=============")
+
+
 	name := c.GetString("un")
 	pw := c.GetString("pw")
 	res := toolBox.GetRes()
@@ -108,10 +118,17 @@ func (c *UserController) Login() {
 		return
 	}
 
+	// 成功登录的情况
+	timestamp := strconv.FormatInt(time.Now().Unix(),10)
+	token := toolBox.GetToken(name, temp[1],timestamp)
+
 	res.Info ="success"
 	currentUser := make(map[string]string)
-	currentUser["name"]=name
-	currentUser["pw"]="*************"
+	currentUser["n"]=name
+	currentUser["p"]="*************"
+	currentUser["t"]=token
+	currentUser["d"]=timestamp
+
 	res.Code = 1
 	res.Data = currentUser
 	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }

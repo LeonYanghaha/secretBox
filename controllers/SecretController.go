@@ -48,5 +48,16 @@ func (c *SecretController)Secret(){
 
 func (c *SecretController) Secretlist() {
 
+	t:= c.Ctx.GetCookie("t")
+	p:= c.Ctx.GetCookie("p")
+	n:= c.Ctx.GetCookie("n")
+	d:= c.Ctx.GetCookie("d")
+	println(t,p,n,d,"=============")
+	toolBox.CheckUser()
 
+	res := toolBox.GetRes()
+	res.Info ="123"
+	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
+	c.ServeJSON()
+	return
 }

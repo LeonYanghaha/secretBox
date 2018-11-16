@@ -5,7 +5,19 @@ import (
 	"secretBox/controllers"
 )
 
+//var filterUser = func(ctx *context.Context) {
+//	 _, ok := ctx.Input.Session("uid").(int)
+//	if !ok && ctx.Request.RequestURI != "/login" {
+//		ctx.Redirect(302, "/login")
+//	}
+//}
+
+
 func init() {
+
+	//beego.InsertFilter("/*",beego.BeforeRouter,filterUser)
+	//beego.Ins
+
 
 	//index
 	beego.Router("/", &controllers.IndexController{},"*:Index")
@@ -19,7 +31,7 @@ func init() {
 
 
 	//secret
-	beego.Router("/secret", &controllers.SecretController{},"post:Secret")
-	beego.Router("/secret", &controllers.SecretController{},"get:Secretlist")
+	beego.Router("/secret/addsecret", &controllers.SecretController{},"post:Secret")
+	beego.Router("/secret/getsecret", &controllers.SecretController{},"get:Secretlist")
 
 }

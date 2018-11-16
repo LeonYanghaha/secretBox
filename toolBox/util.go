@@ -13,6 +13,17 @@ import (
 	"strconv"
 )
 
+func CheckUser()bool{
+
+	return false
+}
+
+
+func GetToken(un,pw,timestamp string) string {
+	temp := beego.AppConfig.String("tokenseed")
+	return Sha1(un + temp + pw + timestamp)
+}
+
 func GetUserInfo ()(userinfo,errorinfo string){
 
 	fileContent,_ := fileReadByLine(GetFilePath())
