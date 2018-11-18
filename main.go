@@ -21,6 +21,5 @@ func main() {
 	}))
 
 	beego.Run()
-
 }
 

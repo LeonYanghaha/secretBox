@@ -12,22 +12,6 @@ type UserController struct {
 	beego.Controller
 }
 
-//var globalSessions *session.Manager
-//
-//func init() {
-//	sessionConfig := &session.ManagerConfig{
-//		CookieName:beego.AppConfig.String("appname"),
-//		EnableSetCookie: true,
-//		Gclifetime:3600,
-//		Maxlifetime: 3600,
-//		Secure: false,
-//		CookieLifeTime: 3600,
-//		ProviderConfig: "./tmp",
-//	}
-//	globalSessions, _ = session.NewManager("memory",sessionConfig)
-//	go globalSessions.GC()
-//}
-
 // POST  注册接口
 func (c *UserController)Regist()  {
 
@@ -77,13 +61,11 @@ func (c *UserController)Reandregist()  {
 
 func (c *UserController) Login() {
 
-
-	t:= c.Ctx.GetCookie("t")
-	p:= c.Ctx.GetCookie("p")
-	n:= c.Ctx.GetCookie("n")
-	d:= c.Ctx.GetCookie("d")
-	println(t,p,n,d,"=============")
-
+	//t:= c.Ctx.GetCookie("t")
+	//p:= c.Ctx.GetCookie("p")
+	//n:= c.Ctx.GetCookie("n")
+	//d:= c.Ctx.GetCookie("d")
+	//println(t,p,n,d,"=============")
 
 	name := c.GetString("un")
 	pw := c.GetString("pw")
@@ -125,13 +107,13 @@ func (c *UserController) Login() {
 	res.Info ="success"
 	currentUser := make(map[string]string)
 	currentUser["n"]=name
-	currentUser["p"]="*************"
+	currentUser["p"]="********"
 	currentUser["t"]=token
 	currentUser["d"]=timestamp
 
 	res.Code = 1
 	res.Data = currentUser
-	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
+	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data }
 	c.ServeJSON()
 	return
 }

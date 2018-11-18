@@ -21,7 +21,7 @@ func CheckUser()bool{
 
 func GetToken(un,pw,timestamp string) string {
 	temp := beego.AppConfig.String("tokenseed")
-	return Sha1(un + temp + pw + timestamp)
+	return Sha1(un + temp + timestamp)
 }
 
 func GetUserInfo ()(userinfo,errorinfo string){
