@@ -18,7 +18,6 @@ func CheckUser()bool{
 	return false
 }
 
-
 func GetToken(un,pw,timestamp string) string {
 	temp := beego.AppConfig.String("tokenseed")
 	return Sha1(un + temp + timestamp)
@@ -27,7 +26,6 @@ func GetToken(un,pw,timestamp string) string {
 func GetUserInfo ()(userinfo,errorinfo string){
 
 	fileContent,_ := fileReadByLine(GetFilePath())
-
 	if len(fileContent)!=4 {
 		return "","文件不合法"
 	}
@@ -77,7 +75,6 @@ func Md5s(s string) string {
 	r := md5.Sum([]byte(s))
 	return hex.EncodeToString(r[:])
 }
-
 
 func Sha1(s string) string {
 	r := sha1.Sum([]byte(s))

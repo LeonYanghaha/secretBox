@@ -3,6 +3,7 @@ package routers
 import (
 	"github.com/astaxie/beego"
 	"secretBox/controllers"
+	"secretBox/toolBox"
 )
 
 //var filterUser = func(ctx *context.Context) {
@@ -18,6 +19,7 @@ func init() {
 	//beego.InsertFilter("/*",beego.BeforeRouter,filterUser)
 	//beego.Ins
 
+	beego.InsertFilter("/secret/*", beego.BeforeRouter,toolBox.FilterUser)
 
 	//index
 	beego.Router("/", &controllers.IndexController{},"*:Index")
