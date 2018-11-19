@@ -44,7 +44,6 @@ func (c *SecretController)Secret(){
 
 func (c *SecretController) Secretlist() {
 
-	//toolBox.CheckUser()
 	res := toolBox.GetRes()
 	secretStr,err := toolBox.GetSecrecList()
 	if err != "" {

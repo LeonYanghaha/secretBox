@@ -6,17 +6,14 @@ import (
 	"crypto/sha1"
 	"encoding/base64"
 	"encoding/hex"
+	"encoding/json"
+	"fmt"
 	"github.com/astaxie/beego"
 	"math/rand"
 	"path"
 	"secretBox/models"
 	"strconv"
 )
-
-func CheckUser()bool{
-
-	return false
-}
 
 func GetToken(un,pw,timestamp string) string {
 	temp := beego.AppConfig.String("tokenseed")
@@ -33,8 +30,30 @@ func GetUserInfo ()(userinfo,errorinfo string){
 }
 func SaveSecretToFile(secret  models.Secret)(isOk bool){
 
+	secretStr , error := GetSecrecList()
+	if error != "" {
+		return  false
+	}
 
-	return false
+	secretBuf := []byte(secretStr)
+
+	var str = string(secretBuf)
+	var st1 []models.Secret
+	err := json.Unmarshal([]byte(str), &st1)
+	if err != nil {
+		return false
+	}
+
+	st1 = append(st1, secret)
+
+
+	buf, _ := json.Marshal(st1)
+	fmt.Println(string(buf))
+	if updateSecret(string(buf)){
+		return true
+	}else {
+		return false
+	}
 }
 
 func GetSecrecList()(secret , error string) {
@@ -162,13 +181,3 @@ func PKCS5UnPadding(orig []byte) []byte {
 	var tail = int(orig[len(orig) - 1])
 	return orig[:(len(orig) - tail)]
 }
-
-//func main() {
-//	key := []byte("asdfghjkl")
-//	var enCryptCode = EnCrypt([]byte("zqwertyuioqwertyuisdfghjwertyujdfghjdfghxcvbnm"), key)
-//	fmt.Println("密文是：", enCryptCode)
-//
-//	var deCryptCode = DeCrypt(enCryptCode, key)
-//	fmt.Println("明文是：", deCryptCode)
-//}
-

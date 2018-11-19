@@ -61,12 +61,6 @@ func (c *UserController)Reandregist()  {
 
 func (c *UserController) Login() {
 
-	//t:= c.Ctx.GetCookie("t")
-	//p:= c.Ctx.GetCookie("p")
-	//n:= c.Ctx.GetCookie("n")
-	//d:= c.Ctx.GetCookie("d")
-	//println(t,p,n,d,"=============")
-
 	name := c.GetString("un")
 	pw := c.GetString("pw")
 	res := toolBox.GetRes()

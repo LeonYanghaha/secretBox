@@ -10,6 +10,23 @@ import (
 	"time"
 )
 
+func updateSecret(line3 string)(isOk bool){
+
+	fileContent,_ := fileReadByLine(GetFilePath())
+	if len(fileContent)!=4 {
+		return false
+	}
+
+	line3 = line3+"\n"
+	content:=[]byte(fileContent[0] + fileContent[1] + line3+ fileContent[3])
+	err:=writeFile(content,0777)
+	if err!=nil {
+		fmt.Println(err)
+		return false
+	}else{
+		return true
+	}
+}
 
 func initFile(un,pw string)(bool,string) {
 
