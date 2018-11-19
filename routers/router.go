@@ -20,9 +20,8 @@ func init() {
 	//user
 	//beego.Router("/login", &controllers.UserController{},"get:login")
 	beego.Router("/user/login", &controllers.UserController{},"post:Login")
-	beego.Router("/user/regist", &controllers.UserController{},"get:Reandregist")
+	//beego.Router("/user/regist", &controllers.UserController{},"get:Reandregist")
 	beego.Router("/user/regist", &controllers.UserController{},"post:Regist")
-
 
 	//secret
 	beego.Router("/secret/addsecret", &controllers.SecretController{},"post:Secret")

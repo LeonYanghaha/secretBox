@@ -19,7 +19,7 @@ func (c *UserController)Regist()  {
 	un:=c.GetString("un")
 	pw:=c.GetString("pw")
 	repw:=c.GetString("repw")
-	println(un)
+	println(un,"uuuuuuuu")
 	println(pw)
 	println(repw)
 	if un=="" || pw=="" || repw==""{
@@ -53,10 +53,6 @@ func (c *UserController)Regist()  {
 	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
 	c.ServeJSON()
 	return
-}
-
-func (c *UserController)Reandregist()  {
-
 }
 
 func (c *UserController) Login() {
