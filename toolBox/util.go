@@ -31,6 +31,32 @@ func GetUserInfo ()(userinfo,errorinfo string){
 	}
 	return fileContent[0],""
 }
+func SaveSecretToFile(secret  models.Secret)(isOk bool){
+
+
+	return false
+}
+
+func GetSecrecList()(secret , error string) {
+	fileContent,_ := fileReadByLine(GetFilePath())
+	if len(fileContent)!=4 {
+		return "","文件不合法"
+	}
+	//secretStr := fileContent[2]
+	//secretBuf := []byte(secretStr)
+	//
+	//var str = string(secretBuf)
+	//var st1 []models.Secret
+	//err := json.Unmarshal([]byte(str), &st1)
+	//if err != nil {
+	//	return nil,"文件不合法"
+	//}
+	//for i:=0; i < len(st1); i++ {
+	//	temp := models.Secret{st1[i].AccountName,st1[i].Password,st1[i].CreateDate,st1[i].Describe,}
+	//}
+	return  fileContent[2],""
+
+}
 
 func GetFilePath ()string{
 		userInfoFile := beego.AppConfig.String("userInfoFile")

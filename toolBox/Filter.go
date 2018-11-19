@@ -19,15 +19,16 @@ import (
 //}
 
 var FilterUser = func(c *context.Context) {
-	t:= c.Input.Cookie("t")
-	p:= c.Input.Cookie("p")
-	n:= c.Input.Cookie("n")
-	d:= c.Input.Cookie("d")
-	token := GetToken(n,p,d)
+	//t:= c.Input.Cookie("t")
+	//p:= c.Input.Cookie("p")
+	//n:= c.Input.Cookie("n")
+	//d:= c.Input.Cookie("d")
+	//token := GetToken(n,p,d)
 
 	//TODO：判断是否过期
 
-	if token != t {
-		c.Redirect(302, "/")
-	}
+	//if token != t {
+	//	println("cookie error ------")
+	//	c.Redirect(302, "/")
+	//}
 }
