@@ -19,11 +19,19 @@ func (c *SecretController)Secret(){
 	res := toolBox.GetRes()
 	accountName := c.GetString("ac")
 	password := c.GetString("pw")
+	repassword := c.GetString("repw")
 	describe := c.GetString("desc")
 	appname := c.GetString("an")
 
-	if accountName=="" || password==""||describe==""||appname=="" {
+	if accountName=="" || password==""||describe==""||appname==""||repassword=="" {
 		res.Info ="参数不能为空！"
+		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
+		c.ServeJSON()
+		return
+	}
+
+	if repassword!= password {
+		res.Info ="两次输入的密码不一致"
 		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
 		c.ServeJSON()
 		return
