@@ -83,14 +83,6 @@ func createFile()bool{
 	return true
 }
 
-func contentToFile(lineNum int , content string)bool{
-
-    //fileContent,_ := readFile()
-
-
-	return false
-}
-
 // 0 文件不存在
 // 1 文件存在，文件损坏
 func CheckFile(filePath string) (int){

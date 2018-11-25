@@ -8,9 +8,6 @@ import (
 
 func init() {
 
-	//beego.InsertFilter("/*",beego.BeforeRouter,filterUser)
-	//beego.Ins
-
 	beego.InsertFilter("/secret/*", beego.BeforeRouter,toolBox.FilterUser)
 
 	//index

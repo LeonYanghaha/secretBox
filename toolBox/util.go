@@ -35,6 +35,10 @@ func SaveSecretToFile(secret  models.Secret)(isOk bool){
 		return  false
 	}
 
+	if secretStr=="\n" {
+		secretStr = ""
+	}
+
 	secretBuf := []byte(secretStr)
 
 	var str = string(secretBuf)
@@ -73,7 +77,14 @@ func GetSecrecList()(secret , error string) {
 	//for i:=0; i < len(st1); i++ {
 	//	temp := models.Secret{st1[i].AccountName,st1[i].Password,st1[i].CreateDate,st1[i].Describe,}
 	//}
-	return  fileContent[2],""
+	// 前端的js怎么就不能判断换行符呢，试了好几种办法的都有bug ,最后在这里做处理吧
+	tempStr := fileContent[2]
+	if tempStr == "\n" {
+		tempStr = ""
+	}
+	// 将字符串转换成对象的返回
+
+	return  tempStr,""
 
 }
 
