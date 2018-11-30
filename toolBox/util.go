@@ -192,3 +192,11 @@ func PKCS5UnPadding(orig []byte) []byte {
 	var tail = int(orig[len(orig) - 1])
 	return orig[:(len(orig) - tail)]
 }
+//func main() {
+//	key := []byte("asdfghjkl")
+//	var enCryptCode = EnCrypt([]byte("zqwertyuioqwertyuisdfghjwertyujdfghjdfghxcvbnm"), key)
+//	fmt.Println("密文是：", enCryptCode)
+//
+//	var deCryptCode = DeCrypt(enCryptCode, key)
+//	fmt.Println("明文是：", deCryptCode)
+//}

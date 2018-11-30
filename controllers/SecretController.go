@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/astaxie/beego"
 	"secretBox/models"
 	"secretBox/toolBox"
@@ -13,6 +12,38 @@ import (
 type SecretController struct {
 	beego.Controller
 }
+
+func (c *SecretController) DeleteSecret(){
+
+
+}
+
+// 展示密码的明文
+func (c *SecretController) ShowSecret(){
+	res := toolBox.GetRes()
+	secret := c.GetString("secret")
+
+	if secret=="" {
+		res.Info ="参数不能为空！"
+		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
+		c.ServeJSON()
+		return
+	}
+	pwSeed := beego.AppConfig.String("pwseedstart")
+	realSecret := toolBox.DeCrypt(secret,[]byte(pwSeed))
+
+	secretList := make(map[string] string)
+	secretList["secret"] = realSecret
+
+	res.Code = 1
+	res.Info = "success"
+	res.Data = secretList
+	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
+	c.ServeJSON()
+	return
+}
+
+
 // POST  保存接口
 func (c *SecretController)Secret(){
 
@@ -38,9 +69,10 @@ func (c *SecretController)Secret(){
 	}
 
 	currentTime := strconv.FormatInt(time.Now().Unix(),10)
-	fmt.Print(currentTime)
+	pwSeed := beego.AppConfig.String("pwseedstart")
+	secretPW := toolBox.EnCrypt([]byte(password),[]byte(pwSeed))
 
-	secret := models.Secret{appname,accountName,password,currentTime,describe}
+	secret := models.Secret{appname,accountName,secretPW,currentTime,describe}
 	if  toolBox.SaveSecretToFile(secret) {
 		res.Info = "ok"
 		res.Code = 0

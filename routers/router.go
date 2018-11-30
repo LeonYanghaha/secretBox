@@ -23,5 +23,7 @@ func init() {
 	//secret
 	beego.Router("/secret/addsecret", &controllers.SecretController{},"post:Secret")
 	beego.Router("/secret/getsecret", &controllers.SecretController{},"get:Secretlist")
+	beego.Router("/secret/showsecret", &controllers.SecretController{},"post:ShowSecret")
+	beego.Router("/secret/delete", &controllers.SecretController{},"post:DeleteSecret")
 
 }
