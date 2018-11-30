@@ -7,7 +7,6 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
-	"fmt"
 	"github.com/astaxie/beego"
 	"math/rand"
 	"path"
@@ -28,6 +27,20 @@ func GetUserInfo ()(userinfo,errorinfo string){
 	}
 	return fileContent[0],""
 }
+//func UpdateSecret(str string)(isOk bool){
+//	secretStr , error := GetSecrecList()
+//	if error != "" {
+//		return  false
+//	}
+//
+//
+//	return false
+//}
+
+func UpdateSecret(str string )(isOk bool){
+	return updateSecret(str)
+}
+
 func SaveSecretToFile(secret  models.Secret)(isOk bool){
 
 	secretStr , error := GetSecrecList()
@@ -49,10 +62,8 @@ func SaveSecretToFile(secret  models.Secret)(isOk bool){
 	}
 
 	st1 = append(st1, secret)
-
-
 	buf, _ := json.Marshal(st1)
-	fmt.Println(string(buf))
+	//fmt.Println(string(buf))
 	if updateSecret(string(buf)){
 		return true
 	}else {
@@ -83,9 +94,7 @@ func GetSecrecList()(secret , error string) {
 		tempStr = ""
 	}
 	// 将字符串转换成对象的返回
-
 	return  tempStr,""
-
 }
 
 func GetFilePath ()string{
