@@ -47,23 +47,20 @@ func SaveSecretToFile(secret  models.Secret)(isOk bool){
 	if error != "" {
 		return  false
 	}
-
 	if secretStr=="\n" {
 		secretStr = ""
 	}
-
-	secretBuf := []byte(secretStr)
-
-	var str = string(secretBuf)
 	var st1 []models.Secret
-	err := json.Unmarshal([]byte(str), &st1)
-	if err != nil {
-		return false
+	if secretStr!="" {
+		secretBuf := []byte(secretStr)
+		var str = string(secretBuf)
+		err := json.Unmarshal([]byte(str), &st1)
+		if err != nil {
+			return false
+		}
 	}
-
 	st1 = append(st1, secret)
 	buf, _ := json.Marshal(st1)
-	//fmt.Println(string(buf))
 	if updateSecret(string(buf)){
 		return true
 	}else {

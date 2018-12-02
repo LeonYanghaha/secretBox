@@ -25,7 +25,6 @@ func (c *SecretController) DeleteSecret(){
 		c.ServeJSON()
 		return
 	}
-
 	secretStr,err := toolBox.GetSecrecList()
 	if err != "" {
 		res.Info = err
@@ -38,10 +37,6 @@ func (c *SecretController) DeleteSecret(){
 			res.Info = "error"
 			res.Code = -1
 		}else{
-			//secretList  := make(map[string] []models.Secret)
-			//secretList["secret"] = st1
-			//res.SecretData = secretList
-			fmt.Print(st1)
 			var str2 []models.Secret
 			for i:=0; i < len(st1); i++ {
 				signSecret := st1[i]
@@ -53,26 +48,6 @@ func (c *SecretController) DeleteSecret(){
 					str2=append(str2,signSecret)
 				}
 			}
-
-
-			//secretBuf := []byte(secretStr)
-			//
-			//var str = string(secretBuf)
-			//var st1 []models.Secret
-			//err := json.Unmarshal([]byte(str), &st1)
-			//if err != nil {
-			//	return false
-			//}
-			//
-			//st1 = append(st1, secret)
-			//buf, _ := json.Marshal(st1)
-			////fmt.Println(string(buf))
-			//if updateSecret(string(buf)){
-			//	return true
-			//}else {
-			//	return false
-			//}
-
 			buf, _ := json.Marshal(str2)
 			isOk := toolBox.UpdateSecret(string(buf))
 			if isOk {
@@ -139,6 +114,7 @@ func (c *SecretController)Secret(){
 	pwSeed := beego.AppConfig.String("pwseedstart")
 	secretPW := toolBox.EnCrypt([]byte(password),[]byte(pwSeed))
 	secret := models.Secret{appname,accountName,secretPW,currentTime,describe}
+	fmt.Println(secret)
 	if  toolBox.SaveSecretToFile(secret) {
 		res.Info = "ok"
 		res.Code = 0
@@ -156,6 +132,9 @@ func (c *SecretController) Secretlist() {
 	secretStr,err := toolBox.GetSecrecList()
 	if err != "" {
 		res.Info = err
+	} else if secretStr=="" {
+		res.Code = 1
+		res.Info = "ok--当前没有数据的情况"
 	}else {
 		secretBuf := []byte(secretStr)
 		var str = string(secretBuf)

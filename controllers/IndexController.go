@@ -28,7 +28,7 @@ func (c *IndexController) Index() {
 		break
 	case 99 :
 		res.Code = 1
-		res.Info= "ok"
+		res.Info= "一切ok，可以直接登录👌"
 		break
 	default:
 		res.Code = -1
