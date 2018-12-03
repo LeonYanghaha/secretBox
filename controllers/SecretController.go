@@ -14,6 +14,11 @@ type SecretController struct {
 	beego.Controller
 }
 
+//编辑的功能
+func (c *SecretController) EditSecret(){
+
+}
+// 删除
 func (c *SecretController) DeleteSecret(){
 	res := toolBox.GetRes()
 	accountName := c.GetString("ac")

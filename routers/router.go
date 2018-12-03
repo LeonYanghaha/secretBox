@@ -13,6 +13,7 @@ func init() {
 	//index
 	beego.Router("/", &controllers.IndexController{},"*:Index")
 	beego.Router("/closepage", &controllers.IndexController{},"post:ClosePage")
+	beego.Router("/getfileinfo", &controllers.IndexController{},"get:GetFileInfo")
 
 	//user
 	beego.Router("/user/login", &controllers.UserController{},"post:Login")
@@ -23,5 +24,6 @@ func init() {
 	beego.Router("/secret/getsecret", &controllers.SecretController{},"get:Secretlist")
 	beego.Router("/secret/showsecret", &controllers.SecretController{},"post:ShowSecret")
 	beego.Router("/secret/delete", &controllers.SecretController{},"post:DeleteSecret")
+	beego.Router("/secret/edit", &controllers.SecretController{},"post:EditSecret")
 
 }
