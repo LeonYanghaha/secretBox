@@ -17,6 +17,13 @@ type SecretController struct {
 func (c *SecretController) EditSecret(){
 
 	res := toolBox.GetRes()
+
+	defer func() {
+		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
+		c.ServeJSON()
+		return
+	}()
+
 	cSecret := models.Secret{}
 	nSecret := models.Secret{}
 	cSecret.AppName = c.GetString("current_appname")
@@ -33,29 +40,21 @@ func (c *SecretController) EditSecret(){
 
 	if cSecret.AppName==""||cSecret.Password==""||cSecret.AccountName==""||cSecret.Describe==""	 {
 		res.Info ="参数不能为空！-c"
-		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
-		c.ServeJSON()
 		return
 	}
 
 	if nSecret.AppName==""||nSecret.Password==""||nSecret.AccountName==""||nSecret.Describe==""||tempRePw==""{
 		res.Info ="参数不能为空！-n"
-		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
-		c.ServeJSON()
 		return
 	}
 	if nSecret.Password != tempRePw {
 		res.Info ="密码不一致"
-		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
-		c.ServeJSON()
 		return
 	}
 	// 先检查是否有cSecret 这条数据
 	secretStr,error := toolBox.GetSecrecList()
 	if error != "" {
 		res.Info = error
-		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
-		c.ServeJSON()
 		return
 	}
 
@@ -65,23 +64,19 @@ func (c *SecretController) EditSecret(){
 	err := json.Unmarshal([]byte(str), &st1)
 	if err != nil {
 		res.Info = err.Error()
-		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
-		c.ServeJSON()
 		return
 	}
 
 	var str2 []models.Secret
-	pwSeed := beego.AppConfig.String("pwseedstart")
-
 	var editItem = false
 	for i:=0; i < len(st1); i++ {
 		signSecret := st1[i]
 		//这里的signSecret.password 还需要转换成明文
-		tempPassword := toolBox.DeCrypt(signSecret.Password,[]byte(pwSeed))
+		tempPassword := toolBox.DeCrypt(signSecret.Password)
 		if cSecret.AccountName==signSecret.AccountName && cSecret.Describe==signSecret.Describe && cSecret.Password==tempPassword && cSecret.AppName==signSecret.AppName {
 			// 查到该item
 			// 将nSecret.password 转成密文
-			nSecret.Password = toolBox.EnCrypt([] byte(nSecret.Password),[]byte(pwSeed))
+			nSecret.Password = toolBox.EnCrypt(nSecret.Password)
 			signSecret = nSecret
 			editItem = true
 		}
@@ -99,20 +94,21 @@ func (c *SecretController) EditSecret(){
 		res.Info = "文件写入失败！"
 		res.Code = -1
 	}
-	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
-	c.ServeJSON()
 	return
 }
 // 删除
 func (c *SecretController) DeleteSecret(){
 	res := toolBox.GetRes()
+	defer func() {
+		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
+		c.ServeJSON()
+		return
+	}()
 	accountName := c.GetString("ac")
 	password := c.GetString("pw")
 	appname := c.GetString("an")
 	if accountName=="" || password==""||appname=="" {
 		res.Info ="参数不能为空！"
-		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
-		c.ServeJSON()
 		return
 	}
 	secretStr,err := toolBox.GetSecrecList()
@@ -148,37 +144,39 @@ func (c *SecretController) DeleteSecret(){
 			}
 		}
 	}
-	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.SecretData }
-	c.ServeJSON()
 	return
 }
 
 // 展示密码的明文
 func (c *SecretController) ShowSecret(){
 	res := toolBox.GetRes()
+	defer func() {
+		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
+		c.ServeJSON()
+		return
+	}()
 	secret := c.GetString("secret")
 	if secret=="" {
 		res.Info ="参数不能为空！"
-		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data }
-		c.ServeJSON()
 		return
 	}
-	pwSeed := beego.AppConfig.String("pwseedstart")
-	realSecret := toolBox.DeCrypt(secret,[]byte(pwSeed))
+	realSecret := toolBox.DeCrypt(secret)
 	secretList := make(map[string] string)
 	secretList["secret"] = realSecret
 	res.Code = 1
 	res.Info = "success"
 	res.Data = secretList
-	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data }
-	c.ServeJSON()
 	return
 }
 
 // POST  保存接口
 func (c *SecretController)Secret(){
-
 	res := toolBox.GetRes()
+	defer func() {
+		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
+		c.ServeJSON()
+		return
+	}()
 	accountName := c.GetString("ac")
 	password := c.GetString("pw")
 	repassword := c.GetString("repw")
@@ -186,21 +184,16 @@ func (c *SecretController)Secret(){
 	appname := c.GetString("an")
 	if accountName=="" || password==""||describe==""||appname==""||repassword=="" {
 		res.Info ="参数不能为空！"
-		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
-		c.ServeJSON()
 		return
 	}
 
 	if repassword!= password {
 		res.Info ="两次输入的密码不一致"
-		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
-		c.ServeJSON()
 		return
 	}
 
 	currentTime := strconv.FormatInt(time.Now().Unix(),10)
-	pwSeed := beego.AppConfig.String("pwseedstart")
-	secretPW := toolBox.EnCrypt([]byte(password),[]byte(pwSeed))
+	secretPW := toolBox.EnCrypt(password)
 	secret := models.Secret{appname,accountName,secretPW,currentTime,describe}
 	if  toolBox.SaveSecretToFile(secret) {
 		res.Info = "ok"
@@ -208,14 +201,17 @@ func (c *SecretController)Secret(){
 	}else {
 		res.Info = "error"
 	}
-	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data    }
-	c.ServeJSON()
 	return
 }
 
 func (c *SecretController) Secretlist() {
 
 	res := toolBox.GetRes()
+	defer func() {
+		c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.SecretData    }
+		c.ServeJSON()
+		return
+	}()
 	secretStr,err := toolBox.GetSecrecList()
 	if err != "" {
 		res.Info = err
@@ -238,7 +234,5 @@ func (c *SecretController) Secretlist() {
 			res.SecretData = secretList
 		}
 	}
-	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.SecretData    }
-	c.ServeJSON()
 	return
 }

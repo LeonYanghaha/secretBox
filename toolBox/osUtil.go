@@ -14,7 +14,12 @@ func openBrower(url string)(bool,error){
 	return false , nil
 }
 
+func getHostName()string {
+	name ,_ := os.Hostname()
+	return name
+}
 
+// 返回当前用户目录
 func getUserHome() (string, error) {
 	user, err := user.Current()
 	if nil == err {

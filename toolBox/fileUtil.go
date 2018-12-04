@@ -6,26 +6,14 @@ import (
 	"github.com/astaxie/beego"
 	"io"
 	"os"
-	"strconv"
+	"path"
 	"time"
 )
-
-func updateSecret(line3 string)(isOk bool){
-
-	fileContent,_ := fileReadByLine(GetFilePath())
-	if len(fileContent)!=4 {
-		return false
-	}
-
-	line3 = line3+"\n"
-	content:=[]byte(fileContent[0] + fileContent[1] + line3+ fileContent[3])
-	err:=writeFile(content,0777)
-	if err!=nil {
-		fmt.Println(err)
-		return false
-	}else{
-		return true
-	}
+func getFilePath ()string{
+	userInfoFile := beego.AppConfig.String("userInfoFile")
+	homePath, _ :=  getUserHome()
+	filePath := path.Join(homePath,userInfoFile)
+	return filePath
 }
 
 func initFile(un,pw string)(bool,string) {
@@ -57,7 +45,7 @@ func initFile(un,pw string)(bool,string) {
 
 func writeFile(data []byte,perm os.FileMode) error{
 
-	fileName := GetFilePath()
+	fileName := getFilePath()
 	f,err:=os.OpenFile(fileName,os.O_WRONLY|os.O_CREATE|os.O_TRUNC,perm)
 	if err!=nil {
 		return err
@@ -92,10 +80,10 @@ func CheckFile(filePath string) (int){
 		return 0
 	}
 	// 走到这一步，都是文件存在的，然后就校验文件的内容
-	lineData,lineNum := fileReadByLine(filePath)
+	_,lineNum := fileReadByLine(filePath)
 
-	fmt.Printf("%v",lineData)
-	fmt.Printf(strconv.Itoa(lineNum))
+	//fmt.Printf("%v",lineData)
+	//fmt.Printf(strconv.Itoa(lineNum))
 
 	if lineNum != 5{
 		return 1

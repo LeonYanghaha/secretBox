@@ -1,6 +1,7 @@
 package toolBox
 
 import (
+	"fmt"
 	"github.com/astaxie/beego/context"
 
 )
@@ -19,16 +20,20 @@ import (
 //}
 
 var FilterUser = func(c *context.Context) {
-	//t:= c.Input.Cookie("t")
+	t:= c.Input.Cookie("t")
 	//p:= c.Input.Cookie("p")
-	//n:= c.Input.Cookie("n")
-	//d:= c.Input.Cookie("d")
-	//token := GetToken(n,p,d)
+	n:= c.Input.Cookie("n")
+	d:= c.Input.Cookie("d")
+	token := GetToken(n,d)
 
 	//TODO：判断是否过期
-
-	//if token != t {
-	//	println("cookie error ------")
-	//	c.Redirect(302, "/")
-	//}
+	fmt.Println(token)
+	fmt.Println(t)
+	//fmt.Println(p)
+	fmt.Println(n)
+	fmt.Println(d)
+	if token != t {
+		println("cookie error ------")
+		c.Redirect(302, "/")
+	}
 }

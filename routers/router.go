@@ -9,9 +9,9 @@ import (
 func init() {
 
 	beego.InsertFilter("/secret/*", beego.BeforeRouter,toolBox.FilterUser)
-
 	//index
 	beego.Router("/", &controllers.IndexController{},"*:Index")
+	beego.Router("/test", &controllers.IndexController{},"get:Test")
 	beego.Router("/closepage", &controllers.IndexController{},"post:ClosePage")
 	beego.Router("/getfileinfo", &controllers.IndexController{},"get:GetFileInfo")
 
@@ -25,5 +25,4 @@ func init() {
 	beego.Router("/secret/showsecret", &controllers.SecretController{},"post:ShowSecret")
 	beego.Router("/secret/delete", &controllers.SecretController{},"post:DeleteSecret")
 	beego.Router("/secret/edit", &controllers.SecretController{},"post:EditSecret")
-
 }

@@ -8,26 +8,8 @@ import (
 type IndexController struct {
 	beego.Controller
 }
-
-//  返回文件信息
-func (c *IndexController) GetFileInfo () {
-
-	filePath := toolBox.GetFilePath()
-	res := toolBox.GetRes()
-	fileInfo := make(map[string]string)
-	fileInfo["fileInfo"]=filePath
-	res.Data = fileInfo
-	res.Info = "success"
-	res.Code = 1
-	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data}
-	c.ServeJSON()
-	return
-}
-
-
 // 首页的打开，用于检测当前状态
-func (c *IndexController) Index() {
-
+func (c *IndexController) Test()  {
 	filePath := toolBox.GetFilePath()
 	res := toolBox.GetRes()
 	isOk := toolBox.CheckFile(filePath)
@@ -53,6 +35,26 @@ func (c *IndexController) Index() {
 	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data}
 	c.ServeJSON()
 	return
+}
+
+//  返回文件信息
+func (c *IndexController) GetFileInfo () {
+
+	filePath := toolBox.GetFilePath()
+	res := toolBox.GetRes()
+	fileInfo := make(map[string]string)
+	fileInfo["fileInfo"]=filePath
+	res.Data = fileInfo
+	res.Info = "success"
+	res.Code = 1
+	c.Data["json"] = map[string]interface{}{ "code":res.Code , "info":res.Info,"data":res.Data}
+	c.ServeJSON()
+	return
+}
+
+//  返回首页
+func (c *IndexController) Index() {
+	c.TplName = "index.html"
 }
 // 退出时，关闭各种资源。
 func (c *IndexController) ClosePage () {
