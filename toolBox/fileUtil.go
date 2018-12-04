@@ -29,14 +29,14 @@ func initFile(un,pw string)(bool,string) {
 	}
 
 	line1 := un+"."+pw+"."+ time.Now().Format("2006-01-02 15:04:05")+"\n"
-	line2 :=getRandomNum()+"\n"
+	line2 := getRandomNum()+"\n"
 	line3 :=""+"\n"
 	line4 := time.Now().Format("2006-01-02 15:04:05")+"\n"
 
-	content:=[]byte(line1 + line2 + line3 + line4)
-	err:=writeFile(content,0777)
+	content := []byte(line1 + line2 + line3 + line4)
+	err:= writeFile(content,0777)
 	if err!=nil {
-		fmt.Println(err)
+		//fmt.Println(err)
 		return false,"error"
 	}else{
 		return true ,"sunccess"
@@ -82,13 +82,9 @@ func CheckFile(filePath string) (int){
 	// 走到这一步，都是文件存在的，然后就校验文件的内容
 	_,lineNum := fileReadByLine(filePath)
 
-	//fmt.Printf("%v",lineData)
-	//fmt.Printf(strconv.Itoa(lineNum))
-
 	if lineNum != 5{
 		return 1
 	}
-	//user := models.User{}
 	return 99
 }
 
@@ -113,7 +109,7 @@ func fileReadByLine (path string)([4]string,int){
 		if err != nil || io.EOF == err {
 			break
 		}
-		fmt.Print(line)
+		//fmt.Print(line)
 		if lineNum < 5 {
 			lineData[lineNum-1] = line
 		}

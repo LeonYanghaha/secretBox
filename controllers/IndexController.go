@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
+	"os"
 	"secretBox/toolBox"
 )
 
@@ -54,13 +56,10 @@ func (c *IndexController) GetFileInfo () {
 
 //  返回首页
 func (c *IndexController) Index() {
-	c.TplName = "index.html"
+	c.TplName = "index.tpl"
 }
 // 退出时，关闭各种资源。
-func (c *IndexController) ClosePage () {
-
-
-	c.Data["isFirst"] = true
-	c.TplName = "index.tpl"
-
+func (c *IndexController) ExitApp () {
+	defer fmt.Println("exit ...")
+	os.Exit(3)
 }

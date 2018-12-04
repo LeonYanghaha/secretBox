@@ -3,16 +3,16 @@ package routers
 import (
 	"github.com/astaxie/beego"
 	"secretBox/controllers"
-	"secretBox/toolBox"
+	"secretBox/filter"
 )
 
 func init() {
 
-	beego.InsertFilter("/secret/*", beego.BeforeRouter,toolBox.FilterUser)
+	beego.InsertFilter("/secret/*", beego.BeforeRouter,filter.FilterUser)
 	//index
 	beego.Router("/", &controllers.IndexController{},"*:Index")
 	beego.Router("/test", &controllers.IndexController{},"get:Test")
-	beego.Router("/closepage", &controllers.IndexController{},"post:ClosePage")
+	beego.Router("/closepage", &controllers.IndexController{},"get:ExitApp")
 	beego.Router("/getfileinfo", &controllers.IndexController{},"get:GetFileInfo")
 
 	//user
