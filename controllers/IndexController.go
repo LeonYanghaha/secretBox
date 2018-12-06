@@ -56,7 +56,7 @@ func (c *IndexController) GetFileInfo () {
 
 //  返回首页
 func (c *IndexController) Index() {
-	c.TplName = "index.tpl"
+	c.TplName = "index.html"
 }
 // 退出时，关闭各种资源。
 func (c *IndexController) ExitApp () {

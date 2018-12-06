@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/astaxie/beego"
 	"runtime"
 	_ "secretBox/routers"
@@ -33,8 +32,9 @@ func main() {
 	//	ExposeHeaders:    []string{"Content-Length", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Content-Type"},
 	//	AllowCredentials: true,
 	//}))
-	fmt.Println(getCurrentPath(),"--")
-	println(getCurrentPath())
+	//fmt.Println(getCurrentPath(),"--")
+	//println(getCurrentPath())
+	beego.SetViewsPath("views")
 	beego.SetStaticPath("/static","./views/static/")
 	beego.Run()
 }

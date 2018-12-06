@@ -23,7 +23,6 @@ import (
 
 var FilterUser = func(c *context.Context) {
 
-	c.SetCookie("ddd","////////")
 	t:= c.Input.Cookie("t")
 	n:= c.Input.Cookie("n")
 	d:= c.Input.Cookie("d")
